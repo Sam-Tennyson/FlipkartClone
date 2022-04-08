@@ -32,8 +32,8 @@ function CardNew() {
   console.log("data",data)
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div className="container">
           <a className="navbar-brand" href="#">Product Information</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -56,7 +56,7 @@ function CardNew() {
               <div className="block"> <b>Description - </b> {data.description} </div>
               <div className="block"> <b>Title - </b> {data.title} </div>
               <div className="block"> <b>Price - </b> {data.price} </div>
-              <div className="block"> <b>Rating - </b> {data?.rating?.rate} | Count  - {data?.rating?.count}</div>     
+              {/* <div className="block"> <b>Rating - </b> {data?.rating?.rate} | Count  - {data?.rating?.count}</div>      */}
             
             </div>
           </div>

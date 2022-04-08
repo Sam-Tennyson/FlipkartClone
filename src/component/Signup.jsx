@@ -39,6 +39,18 @@ export default function Signup() {
   };
 
   return (
+    <>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div className="container">
+          <a className="navbar-brand" href="#">Sign Up</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+           
+          </div>
+        </div>
+      </nav>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -117,7 +129,7 @@ export default function Signup() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -127,5 +139,6 @@ export default function Signup() {
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
+    </>
   );
 }
