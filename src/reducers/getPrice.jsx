@@ -1,7 +1,11 @@
-const getPrice = (state = 0, action)=> {
+let initial = {
+    data: []
+}
+
+const getPrice = (state={...initial}, action)=> {
     switch(action.type) {
         case "Get_Price":
-            return state+action.payload
+            return {...state, data: [...state?.data, action.payload]}
         default:
             return state
     }

@@ -11,31 +11,53 @@ import Login_tippy from "./Login_tippy";
 import MoreInfo from "./MoreInfo";
 import CartList from "./CartList";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, DetailViewer, GetPrice, TotalItem } from "../actions";
-import { useNavigate } from "react-router-dom";
+import {LoggedUser, addToCart, DetailViewer, GetPrice, TotalItem } from "../actions";
+import { useNavigate, useParams } from "react-router-dom";
 import DetailCard from "./DetailCard";
+import Login_tippy_curr from "./Login_tippy_curr";
 
-const Header = () => {
+const NewPage = () => {
   const counter = useSelector((state) => state.myCount);
   const CartItem = useSelector((state) => state.addedItem);
-  const no_of_item = useSelector((state) => state.no_of_item);
+  const no_of_item = useSelector((state) => state.no_of_item); 
+  const logged_user = useSelector((state) => state.Logged_user); 
+  const calculateTotalItems = (id) => {
+    let len = 0;
+    for (let i = 0; i < CartItem.length; i++) {
+        // console.log("llll",cartItem[i].User_id, id.id)
+      if ( CartItem[i].User_id == id.id ) {
+        console.log("jkjkkk")
+        len += 1;
+      }
+    }
+
+    return len;
+  };
+//   let prices = logged_user[0].Cart_Item.price;
+  console.log(logged_user, logged_user[0].Cart_Item,  "oppop");
   const dispatch = useDispatch();
+    const { id } = useParams()
+
   const [showData, setShowData] = useState([]);
   const [data, setData] = useState(productList);
   const [inpulValue, setInputValue] = useState("");
 
-  const add_To_Cart = (title, price, image) => {
+  const add_To_Cart = (ID, title, price, image) => {
     console.log(CartItem, "hvvbdv");
 
     let oldData = JSON.parse(localStorage.getItem("Add_TO_Cart"));
     let ddatas = CartItem.length ? [...CartItem] : [];
     let dataToStore = {
+      Product_Id : ID,
+      Quantity: 1,
+      User_id: id,
       title,
       price,
       image
     };
     ddatas.push(dataToStore);
     console.log(ddatas, "ddatas");
+    logged_user[0].Cart_Item.push(dataToStore)
     dispatch(addToCart(dataToStore));
     dispatch(GetPrice(price));
     dispatch(TotalItem())
@@ -61,19 +83,23 @@ const Header = () => {
   //   setData(p2)
   // }
 
-  // const getUser = () => {
-  //   fetch("https://fakestoreapi.com/products")
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setData(data);
-  //     });
-  // };
+//   const getUser = () => {
+//     fetch("https://fakestoreapi.com/products")
+//       .then((res) => {
+//         return res.json();
+//       })
+//       .then((data) => {
+//         setData(data);
+//       });
+//   };
 
-  // useEffect(() => {
-  //   getUser(productList);
-  // }, []);
+//   const getUser = ()=> {
+//       setData(productList)
+//   }
+
+//   useEffect(() => {
+//     getUser();
+//   }, []);
 
   // const getProductDetails = (
   //   title,
@@ -148,17 +174,18 @@ const Header = () => {
         <div className="header-third">
           <Tippy
             placement="bottom"
-            content={<Login_tippy />}
+            content={<Login_tippy_curr />}
             style={{ backgroundColor: "white", border: "1px solid red" }}
             interactive={true}
           >
             <button
               className="MuiSvgIcon-root"
               onClick={() => {
-                navigate("/signin");
+                  dispatch(LoggedUser())
+                navigate("/");
               }}
             >
-              Login
+              LogOut
             </button>
           </Tippy>
         </div>
@@ -171,20 +198,20 @@ const Header = () => {
           </Tippy>
         </div>
         <div className="header-fifth">
-          <Tippy placement="bottom" content={<CartList />} interactive={true}>
+          {/* <Tippy placement="bottom" content={<CartList />} interactive={true}> */}
             <span
               style={{ margin: "1px" }}
-              // onClick={() => {
-              //   navigate("/carts");
-              // }}
+              onClick={() => {
+                navigate(`/carts/${id}`);
+              }}
             >
               <ShoppingCartIcon />
               Cart
-              {/* <span className="mx-2" >
-              {no_of_item}
-              </span> */}
+              <span className="mx-2" >
+              {calculateTotalItems({id})}
+              </span>
             </span>
-          </Tippy>
+          {/* </Tippy> */}
         </div>
       </div>
 
@@ -273,8 +300,7 @@ const Header = () => {
                         <button
                           className="btn btn-outline-success btn-sm"
                           style={{ width: "120px" }}
-                          // onClick={() => add_To_Cart(d.title, d.price, d.image)}
-                          onClick={() => alert("Please Sign In")}
+                          onClick={() => add_To_Cart(d.id, d.title, d.price, d.image)}
                         >
                           Add to Cart
                         </button>
@@ -298,4 +324,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default NewPage;

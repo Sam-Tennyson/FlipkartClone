@@ -8,6 +8,7 @@ import Signup from './component/Signup'
 import CardNew from './component/CardNew';
 import PageNotFound from './component/PageNotFound';
 import Carts from './component/Carts';
+import NewPage from "./component/NewPage"
 
 const App = () => {
   
@@ -17,10 +18,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/test" element={<Test />}/>
-          <Route path="/login" element={<Login />}/>
+          <Route path="/signin" element={<Login />}/>
           <Route path="/signup" element={<Signup />}/>
-          <Route path="/carts" element={<Carts />}/>
+          <Route path="/carts/:id" element={<Carts />}/>
           <Route path="/product/:id" element={<CardNew />}/>
+          <Route path="/Home/:id" element={<NewPage />}/>
           <Route path="*" element={<PageNotFound />}/>
         </Routes>
       

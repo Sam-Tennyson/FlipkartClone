@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import "./CardNew.css"
 import { useSelector } from "react-redux"
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 
 function CardNew() {
   const [totalPrice, setTotalPrice] = useState(0)
@@ -13,6 +13,7 @@ function CardNew() {
   // const price = useSelector((state)=> state.getPrice)
   // const dispatch = useDispatch()
   let { id } = useParams()
+  const navigate = useNavigate()
 
   const getUser = () => {
     fetch(`https://fakestoreapi.com/products/${id}`)
@@ -32,17 +33,16 @@ function CardNew() {
   console.log("data",data)
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">Product Information</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          
-          </div>
-        </div>
-      </nav>
+    <nav className="navbar navbar-dark bg-primary">
+  <div className="container">
+  <Link className="navbar-brand" to={`/product/${id}`}>Product Information</Link>
+    <form className="d-flex">
+      {/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" /> */}
+      {/* <button className="btn btn-success"  type="submit">Go Back Home</button> */}
+    </form>
+  </div>
+</nav>
+      
       <div className='container my-4'>
 
           {/* Now showing {id} */}
@@ -59,6 +59,7 @@ function CardNew() {
               <div className="block"> <b>Rating - </b> {data?.rating?.rate} | Count  - {data?.rating?.count}</div>     
             
             </div>
+          </div>
           </div>
           {/* <h4>Cart Items</h4>
           
@@ -100,7 +101,6 @@ function CardNew() {
           </div>
         </div>
       </div> */}
-          </div>
       
     </>
   )

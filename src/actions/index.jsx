@@ -39,4 +39,37 @@ export const TotalItem = ()=> {
     }
 }
 
+export const RegisterUser = (newMember)=> {
+    return {
+        type: "Register_User",
+        payload: newMember
+    }
+}
+
+export const LoggedUser = (newMember)=> {
+    console.log("check1")
+    return {
+        type: "LoggedUser",
+        payload: newMember
+    }
+}
+
+export const RemoveItem = (ids)=> {
+    console.log("check111111", ids)
+    return {
+        type: "RemoveItem",
+        payload: ids
+    }
+}
+export const AddMultiplier = (ids)=> {
+    console.log("check222222", ids)
+    return {
+        type: "AddMultiplier",
+        payload: ids
+    }
+}
+
+
+
+
 

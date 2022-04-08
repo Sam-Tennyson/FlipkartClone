@@ -12,7 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import {Link} from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { LoggedUser } from '../actions';
 
 function Copyright(props) {
   return (
@@ -30,18 +34,63 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+  const navigate = useNavigate();
+  const registered_user = useSelector((state)=>state.Registered_Member)
+  const dispatch = useDispatch()
+  const [loggedUser, setLoggedUser] = useState({
+    email:"",
+    password:""
+  })
+
+  const handleInput = (e)=> {
+    let name = e.target.name;
+    let value = e.target.value;
+    setLoggedUser( {...loggedUser, [name]:value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // const data = new FormData(e.currentTarget);
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+    if (!loggedUser.email || !loggedUser.password)
+    {
+      alert("All Fields are Required")
+    } else {
+        console.log(registered_user)
+        registered_user.data.find((user)=> {
+          if (user.Email === loggedUser.email || user.Password === loggedUser.password) {
+            console.log("----->>>>>",user)
+            dispatch(LoggedUser(user))
+            navigate(`/Home/${user.Id}`)
+            return 1
+          }
+        })
+        // dispatch(RegisterUser(currUser))
+        setLoggedUser({email:"", password:""})
+    }
+
   };
 
   return (
 
+    <>
     
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div className="container">
+          <a className="navbar-brand" href="#">Sign In</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+           
+          </div>
+        </div>
+      </nav>
 
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -69,6 +118,8 @@ export default function SignIn() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              value={loggedUser.email}
+              onChange={handleInput}
               autoFocus
             />
             <TextField
@@ -79,12 +130,14 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
+              value={loggedUser.password}
+              onChange={handleInput}
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -110,5 +163,6 @@ export default function SignIn() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+    </>
   );
 }

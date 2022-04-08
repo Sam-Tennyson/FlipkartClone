@@ -12,6 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSelect } from '@mui/base';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { RegisterUser } from '../actions';
 
 function Copyright(props) {
   return (
@@ -29,16 +34,71 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Signup() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  
+  // const registered_user = useSelector((state)=>state.Registered_Member)
+  // console.log("asdf",registered_user);
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  // let navigate = useNavigate();
+  // const registered_user = useSelector((state)=>state.Registered_Member)
+  
+  const [NewUser, setNewUser] = useState({
+    fname:"",
+    lname:"",
+    email:"",
+    password:""
+  })
+
+  const handleInput = (e)=> {
+    let name = e.target.name;
+    let value = e.target.value;
+    setNewUser( {...NewUser, [name]:value })
+  }
+
+  // console.log(registered_user,"registered_user");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // const data = new FormData(e.currentTarget);
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+    if (!NewUser.fname || !NewUser.lname || !NewUser.email || !NewUser.password)
+    {
+      alert("All Fields are Required")
+    } else {
+        
+        let currUser = {
+          Id: Date.now(),
+          Cart_Item:[],
+          Firstname: NewUser.fname,
+          Lastname: NewUser.lname,
+          Email: NewUser.email,
+          Password: NewUser.password,
+        };
+        dispatch(RegisterUser(currUser))
+        
+        alert("You have successfully Registered")
+        setNewUser({fname:"", lname: "", email:"", password:""})
+        navigate("/signin")
+    }
   };
 
   return (
+    <>
+
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div className="container">
+          <a className="navbar-brand" href="#">Sign Up</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+           
+          </div>
+        </div>
+      </nav>
+    
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -61,11 +121,13 @@ export default function Signup() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="fname"
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  value={NewUser.fname}
+                  onChange={handleInput}
                   autoFocus
                 />
               </Grid>
@@ -75,7 +137,9 @@ export default function Signup() {
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
+                  name="lname"
+                  value={NewUser.lname}
+                  onChange={handleInput}
                   autoComplete="family-name"
                 />
               </Grid>
@@ -86,6 +150,8 @@ export default function Signup() {
                   id="email"
                   label="Email Address"
                   name="email"
+                  value={NewUser.email}
+                  onChange={handleInput}
                   autoComplete="email"
                 />
               </Grid>
@@ -97,15 +163,17 @@ export default function Signup() {
                   label="Password"
                   type="password"
                   id="password"
+                  value={NewUser.password}
+                  onChange={handleInput}
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -117,7 +185,7 @@ export default function Signup() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -127,5 +195,6 @@ export default function Signup() {
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
+    </>
   );
 }
