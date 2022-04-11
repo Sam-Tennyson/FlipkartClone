@@ -197,8 +197,8 @@ const Header = () => {
         >
           {data.length
             ? data
-                ?.filter((val) => {
-                  if (inpulValue === 0) {
+                .filter((val) => {
+                  if (inpulValue === "") {
                     return val;
                   } else if (
                     val.title.toLowerCase().includes(inpulValue.toLowerCase())

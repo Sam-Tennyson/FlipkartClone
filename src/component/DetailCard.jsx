@@ -16,22 +16,22 @@ function DetailCard() {
          
         <div className='block'>
             <span className='highlight'> <b> Title - </b></span> 
-            {CardDetails?.item?.title}
+            {CardDetails.item.title}
         </div>
         <div className='block'>
         <span className='highlight'> <b> Price - </b></span> 
             
-            {CardDetails?.item?.price}
+            {CardDetails.item.price}
             </div>
         <div className='block'>
         <span className='highlight'><b>Category - </b></span> 
             
-            {CardDetails?.item?.category}
+            {CardDetails.item.category}
             </div>
         <div className='block'>
         <span className='highlight'><b>Rating - </b></span> 
             
-            {CardDetails?.item?.rating["rate"] } and { CardDetails?.item?.rating["count"]}
+            {/* {CardDetails?.item?.rating["rate"] } and { CardDetails?.item?.rating["count"]} */}
         </div>
     
     </div>:"" }

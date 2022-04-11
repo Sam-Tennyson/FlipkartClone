@@ -86,7 +86,6 @@ export default function Signup() {
 
   return (
     <>
-
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container">
           <a className="navbar-brand" href="#">Sign Up</a>
@@ -98,7 +97,6 @@ export default function Signup() {
           </div>
         </div>
       </nav>
-    
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />

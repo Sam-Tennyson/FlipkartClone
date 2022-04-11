@@ -33,16 +33,17 @@ function CardNew() {
   console.log("data",data)
   return (
     <>
-    <nav className="navbar navbar-dark bg-primary">
-  <div className="container">
-  <Link className="navbar-brand" to={`/product/${id}`}>Product Information</Link>
-    <form className="d-flex">
-      {/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" /> */}
-      {/* <button className="btn btn-success"  type="submit">Go Back Home</button> */}
-    </form>
-  </div>
-</nav>
-      
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div className="container">
+          <a className="navbar-brand" href="#">Product Information</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          
+          </div>
+        </div>
+      </nav>
       <div className='container my-4'>
 
           {/* Now showing {id} */}
@@ -56,7 +57,7 @@ function CardNew() {
               <div className="block"> <b>Description - </b> {data.description} </div>
               <div className="block"> <b>Title - </b> {data.title} </div>
               <div className="block"> <b>Price - </b> {data.price} </div>
-              <div className="block"> <b>Rating - </b> {data?.rating?.rate} | Count  - {data?.rating?.count}</div>     
+              {/* <div className="block"> <b>Rating - </b> {data?.rating?.rate} | Count  - {data?.rating?.count}</div>      */}
             
             </div>
           </div>
